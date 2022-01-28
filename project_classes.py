@@ -16,19 +16,21 @@ class Account:
         Account.message_number_accounts()
         self.account_number = account_number
         self.name_holder = name_holder
-        self.balance = opening_balance
+        self._balance = opening_balance
+
+    @property
+    def balance(self):
+        '''The docstring for the balance property'''
+        return self._balance
     
     def __str__(self):
-        return f"Account[{self.account_number}] - {self.name_holder}, {self.type_account} account = {self.balance}"
+        return f"Account[{self.account_number}] - {self.name_holder}, account = {self.balance}"
 
     def deposit(self, value):
-        self.balance += value
+        self._balance += value
     
     def withdraw(self, value):
-        self.balance -= value
-    
-    def get_balance(self):
-        return self.balance
+        self._balance -= value
 
 class CurrentAccount(Account):
     '''subclass of the Account class, adds an overdraft limit as well as redefines the withdraw method'''
@@ -107,9 +109,9 @@ acc3 = InvestmentAccount('567', 'Phoebe', 12.45, 'high risk')
 
 acc1.deposit(23.45)
 acc1.withdraw(12.33)
-print('balance:', acc1.get_balance())
+print('balance:', acc1.balance)
 acc1.withdraw(300.00)
-print('balance:', acc1.get_balance())
+print('balance:', acc1.balance)
 
 print(f'Number of Account instances created: {Account.instance_count}')
 
